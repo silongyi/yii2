@@ -55,7 +55,7 @@ class User extends UserModel
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => 10,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

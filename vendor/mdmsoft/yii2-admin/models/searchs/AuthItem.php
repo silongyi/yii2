@@ -84,9 +84,6 @@ class AuthItem extends Model
 
         return new ArrayDataProvider([
             'allModels' => $items,
-            'pagination' => [
-                      'pageSize' => 10,
-                ],
         ]);
     }
 }

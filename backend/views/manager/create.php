@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\ManagerModel */
 
-$this->title = 'Create Manager Model';
+$this->title = '添加管理员';
 $this->params['breadcrumbs'][] = ['label' => 'Manager Models', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

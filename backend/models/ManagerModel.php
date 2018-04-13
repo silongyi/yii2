@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%manager}}".
@@ -28,17 +29,16 @@ class ManagerModel extends \yii\db\ActiveRecord
     {
         return '{{%manager}}';
     }
-
+    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['username', 'password_hash', 'email'], 'required'],
-            [['phone', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
+            [['username', 'password_hash'], 'required'],
+            [['phone'], 'integer'],
+            [['username', 'password_hash'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,15 +50,9 @@ class ManagerModel extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'username' => 'Username',
-            'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
             'phone' => 'Phone',
-            'email' => 'Email',
-            'role' => 'Role',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
+    
 }

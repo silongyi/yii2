@@ -1,8 +1,8 @@
 $('i.glyphicon-refresh-animate').hide();
 function updateItems(r) {
-    _opts.items.avaliable = r.avaliable;
+    _opts.items.available = r.available;
     _opts.items.assigned = r.assigned;
-    search('avaliable');
+    search('available');
     search('assigned');
 }
 
@@ -32,8 +32,8 @@ function search(target) {
     var q = $('.search[data-target="' + target + '"]').val();
 
     var groups = {
-        role: [$('<optgroup label="角色">'), false],
-        permission: [$('<optgroup label="授权">'), false],
+        role: [$('<optgroup label="Roles">'), false],
+        permission: [$('<optgroup label="Permission">'), false],
     };
     $.each(_opts.items[target], function (name, group) {
         if (name.indexOf(q) >= 0) {
@@ -49,5 +49,5 @@ function search(target) {
 }
 
 // initial
-search('avaliable');
+search('available');
 search('assigned');

@@ -19,7 +19,7 @@ class AssignmentController extends Controller
 {
     public $userClassName;
     public $idField = 'id';
-    public $usernameField = 'username:text:用户名';
+    public $usernameField = 'username';
     public $fullnameField;
     public $searchClass;
     public $extraColumns = [];
@@ -62,7 +62,7 @@ class AssignmentController extends Controller
 
         if ($this->searchClass === null) {
             $searchModel = new AssignmentSearch;
-            $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $this->userClassName, 'username', true);
+            $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $this->userClassName, $this->usernameField);
         } else {
             $class = $this->searchClass;
             $searchModel = new $class;
@@ -90,7 +90,7 @@ class AssignmentController extends Controller
         return $this->render('view', [
                 'model' => $model,
                 'idField' => $this->idField,
-                'usernameField' => 'username',
+                'usernameField' => $this->usernameField,
                 'fullnameField' => $this->fullnameField,
         ]);
     }

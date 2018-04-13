@@ -1,3 +1,6 @@
+<?php
+use mdm\admin\components\MenuHelper;
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -25,9 +28,7 @@
             </div>
         </form>
         <!-- /.search form -->
-
-        <?= dmstr\widgets\Menu::widget(
-            [
+        <?= dmstr\widgets\Menu::widget([
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
@@ -60,10 +61,35 @@
                             ],
                         ],
                     ],
+                    [
+                    'label' => '管理员管理',
+                    'icon' => 'share',
+                    'url' => '#',
+                    'items' => [
+                        ['label' => '管理员列表', 'icon' => 'file-code-o', 'url' => ['/manager/index'],],
+                        ['label' => '管理员添加', 'icon' => 'dashboard', 'url' => ['/manager/create'],],
+                        [
+                            'label' => 'Level One',
+                            'icon' => 'circle-o',
+                            'url' => '#',
+                            'items' => [
+                                ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
+                                [
+                                    'label' => 'Level Two',
+                                    'icon' => 'circle-o',
+                                    'url' => '#',
+                                    'items' => [
+                                        ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                                        ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    ],
+                 
                 ],
-            ]
-        ) ?>
-
+ ]) ?>
     </section>
 
 </aside>

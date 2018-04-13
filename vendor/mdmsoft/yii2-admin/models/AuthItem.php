@@ -2,12 +2,12 @@
 
 namespace mdm\admin\models;
 
-use Yii;
-use yii\rbac\Item;
-use yii\helpers\Json;
-use yii\base\Model;
-use mdm\admin\components\Helper;
 use mdm\admin\components\Configs;
+use mdm\admin\components\Helper;
+use Yii;
+use yii\base\Model;
+use yii\helpers\Json;
+use yii\rbac\Item;
 
 /**
  * This is the model class for table "tbl_auth_item".
@@ -61,19 +61,19 @@ class AuthItem extends Model
         return [
             [['ruleName'], 'checkRule'],
             [['name', 'type'], 'required'],
-            [['name'], 'unique', 'when' => function() {
+            [['name'], 'checkUnique', 'when' => function () {
                 return $this->isNewRecord || ($this->_item->name != $this->name);
             }],
             [['type'], 'integer'],
             [['description', 'data', 'ruleName'], 'default'],
-            [['name'], 'string', 'max' => 64]
+            [['name'], 'string', 'max' => 64],
         ];
     }
 
     /**
      * Check role is unique
      */
-    public function unique()
+    public function checkUnique()
     {
         $authManager = Configs::authManager();
         $value = $this->name;
@@ -153,7 +153,6 @@ class AuthItem extends Model
     public function save()
     {
         if ($this->validate()) {
-            echo $this->validator();exit;
             $manager = Configs::authManager();
             if ($this->_item === null) {
                 if ($this->type == Item::TYPE_ROLE) {
@@ -247,32 +246,25 @@ class AuthItem extends Model
     public function getItems()
     {
         $manager = Configs::authManager();
-        $avaliable = [];
+        $available = [];
         if ($this->type == Item::TYPE_ROLE) {
             foreach (array_keys($manager->getRoles()) as $name) {
-                $avaliable[$name] = 'role';
+                $available[$name] = 'role';
             }
         }
-        $option = (int)Yii::$app->request->get('option');
         foreach (array_keys($manager->getPermissions()) as $name) {
-            if($name[0] == '/' && !$option) {
-                continue;
-            }
-            $avaliable[$name] = $name[0] == '/' ? 'route' : 'permission';
+            $available[$name] = $name[0] == '/' ? 'route' : 'permission';
         }
 
         $assigned = [];
         foreach ($manager->getChildren($this->_item->name) as $item) {
-            if($item->type != 1 && $item->name[0] == '/' && !$option) {
-                continue;
-            }
             $assigned[$item->name] = $item->type == 1 ? 'role' : ($item->name[0] == '/' ? 'route' : 'permission');
-            unset($avaliable[$item->name]);
+            unset($available[$item->name]);
         }
-        unset($avaliable[$this->name]);
-        return[
-            'avaliable' => $avaliable,
-            'assigned' => $assigned
+        unset($available[$this->name]);
+        return [
+            'available' => $available,
+            'assigned' => $assigned,
         ];
     }
 
@@ -294,7 +286,7 @@ class AuthItem extends Model
     {
         $result = [
             Item::TYPE_PERMISSION => 'Permission',
-            Item::TYPE_ROLE => 'Role'
+            Item::TYPE_ROLE => 'Role',
         ];
         if ($type === null) {
             return $result;

@@ -69,10 +69,7 @@ class MenuHelper
         /* @var $manager \yii\rbac\BaseManager */
         $manager = Configs::authManager();
         $menus = Menu::find()->asArray()->indexBy('id')->all();
-        echo '<pre/>';
-//         var_dump($menus);exit;
         $key = [__METHOD__, $userId, $manager->defaultRoles];
-        print_r($key);exit;
         $cache = $config->cache;
 
         if ($refresh || $cache === null || ($assigned = $cache->get($key)) === false) {
@@ -194,10 +191,7 @@ class MenuHelper
      * @return array
      */
     private static function normalizeMenu(&$assigned, &$menus, $callback, $parent = null)
-    { 
-//         echo '<pre/>';
-//         print_r($assigned);
-//         print_r($menus);exit;
+    {
         $result = [];
         $order = [];
         foreach ($assigned as $id) {
@@ -208,7 +202,7 @@ class MenuHelper
                     $item = call_user_func($callback, $menu);
                 } else {
                     $item = [
-                        'label' => $menu['name'],
+                        'label' => Yii::t('rbac-admin',$menu['name']),
                         'url' => static::parseRoute($menu['route']),
                     ];
                     if ($menu['children'] != []) {

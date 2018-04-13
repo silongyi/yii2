@@ -50,10 +50,7 @@ class Menu extends MenuModel
         }]);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                    'pageSize' => 10,
-                ],
+            'query' => $query
         ]);
 
         $sort = $dataProvider->getSort();
@@ -80,8 +77,7 @@ class Menu extends MenuModel
 
         $query->andFilterWhere(['like', 'lower(t.name)', strtolower($this->name)])
             ->andFilterWhere(['like', 't.route', $this->route])
-            ->andFilterWhere(['like', 'lower(parent.name)', strtolower($this->parent_name)])
-            ->andFilterWhere(['t.order'=>$this->order]); 
+            ->andFilterWhere(['like', 'lower(parent.name)', strtolower($this->parent_name)]);
 
         return $dataProvider;
     }

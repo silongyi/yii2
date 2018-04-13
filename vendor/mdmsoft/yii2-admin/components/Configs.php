@@ -76,7 +76,7 @@ class Configs extends \yii\base\Object
     /**
      * @var string Menu table name.
      */
-    public $userTable = '{{%manager}}';
+    public $userTable = '{{%user}}';
 
     /**
      * @var integer Default status user signup. 10 mean active.

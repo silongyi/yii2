@@ -23,11 +23,18 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            ['username', 'filter', 'filter' => 'trim'],
+            ['username', 'required', 'message' => '用户名不可以为空'],
+            ['username', 'unique', 'targetClass' => '\backend\models\ManagerModel', '用户名已存在'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+            //password check
+            ['password', 'required', 'message' => '密码不可以为空'],
+            ['password', 'string', 'min' => 6, 'tooshort' => '密码至少填写6位'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+             // default 默认在没有数据的时候才会进行赋值
+            [['created_at', 'updated_at'], 'default', 'value' => time()],
         ];
     }
 

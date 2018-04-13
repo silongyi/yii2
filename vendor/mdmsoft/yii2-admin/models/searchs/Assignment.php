@@ -46,18 +46,13 @@ class Assignment extends Model
      * @param  string                       $usernameField
      * @return \yii\data\ActiveDataProvider
      */
-    public function search($params, $class, $usernameField, $managerListCondition = false)
+    public function search($params, $class, $usernameField)
     {
         $query = $class::find();
-        if($managerListCondition) {
-            $query->andFilterWhere(['status' => 10]);
-        }
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                    'pageSize' => 10,
-                ],
-        ]); 
+        ]);
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
